@@ -81,12 +81,14 @@ public class Panel extends JPanel {
 
 
         void simulation(){
+            // Collisions
             ArrayList<Integer> collided = new ArrayList<>();
             for (int i = 0; i < balls.size(); i++) {
                 if(collided.contains(i)) continue;
 
                 Ball b1 = balls.get(i);
 
+                // Ball to ball
                 for(int j = i+1; j < balls.size(); j++){
                     if(collided.contains(j)) continue;
 
@@ -104,11 +106,15 @@ public class Panel extends JPanel {
                         System.out.println("Collision " + i + ":" + b1 + " -> " + j + ":" + b2);
                     }
                 }
+
+                // Borders
+                if (b1.getX() <= 0 || b1.getX() >= getWidth()) b1.setSpeedX(-b1.getSpeedX());
+                if (b1.getY() <= 0 || b1.getY() >= getWidth()) b1.setSpeedY(-b1.getSpeedY());
             }
         }
 
         void updateObjects(){
-            for (Ball k : balls) k.update();
+            for (Ball b : balls) b.update();
         }
     }
 }
