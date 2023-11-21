@@ -18,7 +18,7 @@ public class Ball {
         int MAX_SPEED = 5;
         Random r = new Random();
         size = r.nextInt(10, 51);
-        mass = r.nextInt(1, 11);
+        mass = size / 10;
         speedX = r.nextBoolean() ? r.nextInt(-MAX_SPEED, 0) : r.nextInt(1, MAX_SPEED + 1);
         speedY = r.nextBoolean() ? r.nextInt(-MAX_SPEED, 0) : r.nextInt(1, MAX_SPEED + 1);
     }
@@ -55,6 +55,9 @@ public class Ball {
 
 
     public void update() {
+        if(speedX > 5) speedX = 5;
+        if(speedY > 5) speedY = 5;
+
         x += speedX;
         y += speedY;
     }

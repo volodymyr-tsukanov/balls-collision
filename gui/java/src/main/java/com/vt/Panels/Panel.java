@@ -16,16 +16,16 @@ import javax.swing.Timer;
 public class Panel extends JPanel {
     ArrayList<Ball> balls;
     private Timer timer;
-    private Event event;
+    private Events events;
 
 
     public Panel() {
         balls = new ArrayList<>();
-        event = new Event();
-        timer = new Timer(33, event); //30fps -> 1s/30 = 0.033s
+        events = new Events();
+        timer = new Timer(33, events); //30fps -> 1s/30 = 0.033s
         
         setBackground(Color.BLACK);
-        addMouseListener(event);
+        addMouseListener(events);
         timer.start();
     }
 
@@ -46,11 +46,12 @@ public class Panel extends JPanel {
     
     protected void drawUI(Graphics graphics){
         graphics.setColor(Color.YELLOW);
-        graphics.drawString(Integer.toString(balls.size()), 40, 40);
+        graphics.drawString("Balls: " + balls.size(), 40, 40);
+        graphics.drawString("Collisions: " + events.collisionCount, 40, 55);
     }
 
 
-    public class Event implements MouseListener, ActionListener {
+    public class Events implements MouseListener, ActionListener {
         int collisionCount = 0;
 
 
@@ -82,26 +83,23 @@ public class Panel extends JPanel {
 
         void simulation(){
             // Collisions
-            ArrayList<Integer> collided = new ArrayList<>();
             for (int i = 0; i < balls.size(); i++) {
-                if(collided.contains(i)) continue;
-
                 Ball b1 = balls.get(i);
 
                 // Ball to ball
                 for(int j = i+1; j < balls.size(); j++){
-                    if(collided.contains(j)) continue;
-
                     Ball b2 = balls.get(j);
 
                     if (Math.abs(b1.getX() - b2.getX()) < b1.getSize() && Math.abs(b1.getY() - b2.getY()) < b1.getSize()) {
-                        b1.setSpeedX(((b1.getMass()-b2.getMass())*b1.getSpeedX()+2*b2.getMass()*b2.getSpeedX()+b1.getMass()*b1.getSpeedX())/(b1.getMass()+b2.getMass()));
+                        /*b1.setSpeedX(((b1.getMass()-b2.getMass())*b1.getSpeedX()+2*b2.getMass()*b2.getSpeedX()+b1.getMass()*b1.getSpeedX())/(b1.getMass()+b2.getMass()));
                         b1.setSpeedY(((b1.getMass()-b2.getMass())*b1.getSpeedY()+2*b2.getMass()*b2.getSpeedY()+b1.getMass()*b1.getSpeedY())/(b1.getMass()+b2.getMass()));
                         b2.setSpeedX(((b2.getMass()-b1.getMass())*b2.getSpeedX()+2*b1.getMass()*b1.getSpeedX()+b2.getMass()*b2.getSpeedX())/(b1.getMass()+b2.getMass()));
-                        b2.setSpeedY(((b2.getMass()-b1.getMass())*b2.getSpeedY()+2*b1.getMass()*b1.getSpeedY()+b2.getMass()*b2.getSpeedY())/(b1.getMass()+b2.getMass()));
+                        b2.setSpeedY(((b2.getMass()-b1.getMass())*b2.getSpeedY()+2*b1.getMass()*b1.getSpeedY()+b2.getMass()*b2.getSpeedY())/(b1.getMass()+b2.getMass()));*/
+                        b1.setSpeedX(-b1.getSpeedX());
+                        b1.setSpeedY(-b1.getSpeedY());
+                        b2.setSpeedX(-b2.getSpeedX());
+                        b2.setSpeedY(-b2.getSpeedY());
 
-                        collided.add(i);
-                        collided.add(j);
                         collisionCount++;
                         System.out.println("Collision " + i + ":" + b1 + " -> " + j + ":" + b2);
                     }
@@ -109,7 +107,11 @@ public class Panel extends JPanel {
 
                 // Borders
                 if (b1.getX() <= 0 || b1.getX() >= getWidth()) b1.setSpeedX(-b1.getSpeedX());
-                if (b1.getY() <= 0 || b1.getY() >= getWidth()) b1.setSpeedY(-b1.getSpeedY());
+                if (b1.getY() <= 0 || b1.getY() >= getHeight()) b1.setSpeedY(-b1.getSpeedY());
+
+                // Kill
+                if (Math.abs(b1.getX()) > 2*getWidth()) balls.remove(i);
+                if (Math.abs(b1.getY()) > 2*getHeight()) balls.remove(i);
             }
         }
 
