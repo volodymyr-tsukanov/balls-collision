@@ -82,16 +82,16 @@ public class Panel extends JPanel {
                 
                 Kula k1 = listaKul.get(i);
                 
-                for(int j = 0; j < listaKul.size(); j++){
-                    if(collided.contains(j) || i == j) continue;
+                for(int j = i+1; j < listaKul.size(); j++){
+                    if(collided.contains(j)) continue;
                     
                     Kula k2 = listaKul.get(j);
                     
                     if (Math.abs(k1.x - k2.x) < size && Math.abs(k1.y - k2.y) < size) {
-                        k1.xspeed = -k1.xspeed;
-                        k1.yspeed = -k1.yspeed;
-                        k2.xspeed = -k2.xspeed;
-                        k2.yspeed = -k2.yspeed;
+                        k1.xspeed = ((k1.mass-k2.mass)*k1.xspeed+2*k2.mass*k2.xspeed+k1.mass*k1.xspeed)/(k1.mass+k2.mass);
+                        k1.yspeed = ((k1.mass-k2.mass)*k1.yspeed+2*k2.mass*k2.yspeed+k1.mass*k1.yspeed)/(k1.mass+k2.mass);
+                        k2.xspeed = ((k2.mass-k1.mass)*k2.xspeed+2*k1.mass*k1.xspeed+k2.mass*k2.xspeed)/(k1.mass+k2.mass);
+                        k2.yspeed = ((k2.mass-k1.mass)*k2.yspeed+2*k1.mass*k1.yspeed+k2.mass*k2.yspeed)/(k1.mass+k2.mass);
                         
                         collided.add(i);
                         collided.add(j);
