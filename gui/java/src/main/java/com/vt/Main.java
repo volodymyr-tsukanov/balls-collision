@@ -1,11 +1,10 @@
-package com.mycompany.lab7;
+package com.vt;
 
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
 
-public class Lab7 {
-
+public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Moje okno!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,3 +14,4 @@ public class Lab7 {
         frame.setVisible(true);
     }
 }
+
