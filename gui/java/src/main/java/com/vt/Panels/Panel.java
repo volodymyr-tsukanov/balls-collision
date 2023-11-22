@@ -105,8 +105,7 @@ public class Panel extends JPanel {
                     b1.setSpeed(Vector.neg(b1.getSpeed()));
 
                 // Kill
-                if (Math.abs(b1.getX()) > 2*getWidth()) balls.remove(i);
-                if (Math.abs(b1.getY()) > 2*getHeight()) balls.remove(i);
+                if (Math.abs(b1.getX()) > 2*getWidth() || Math.abs(b1.getY()) > 2*getHeight()) balls.remove(b1);
             }
         }
 
@@ -118,7 +117,8 @@ public class Panel extends JPanel {
             x = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.cos(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.cos(collisionAngle+Math.PI/2));
             y = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.sin(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.sin(collisionAngle+Math.PI/2));
 
-            b1.setSpeed(new Vector(x, y));
+            if(Double.isNaN(x) || Double.isNaN(y)) b1.destroy();
+            else b1.setSpeed(new Vector(x, y));
         }
 
         void updateObjects(){

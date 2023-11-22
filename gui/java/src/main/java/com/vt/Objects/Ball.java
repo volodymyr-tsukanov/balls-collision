@@ -50,11 +50,16 @@ public class Ball {
 
 
     public void update() {
-        if(speed.getX() > 5) speed.setX(5);
-        if(speed.getY() > 5) speed.setY(5);
+        if(speed.getMagnitude() > 50) destroy();
 
         x += speed.getX();
         y += speed.getY();
+    }
+
+    public void destroy(){
+        x = 9999*9999;
+        y = 9999*9999;
+        speed = new Vector(0, 0);
     }
 
     @Override
