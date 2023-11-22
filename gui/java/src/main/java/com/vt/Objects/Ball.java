@@ -5,7 +5,8 @@ import java.util.Random;
 
 
 public class Ball {
-    int x, y, size, mass;
+    int x, y, size;
+    double mass;
     Vector speed;
     Color color;
 
@@ -18,8 +19,8 @@ public class Ball {
 
         int MAX_SPEED = 5;
         Random r = new Random();
-        size = r.nextInt(10, 51);
-        mass = size / 10;
+        size = r.nextInt(20, 71);
+        mass = size * 10;
         double sx = r.nextBoolean() ? r.nextDouble(-MAX_SPEED, 0) : r.nextDouble(1, MAX_SPEED+1), sy = r.nextBoolean() ? r.nextDouble(-MAX_SPEED, 0) : r.nextDouble(1, MAX_SPEED+1);
         speed = new Vector(sx, sy);
     }
@@ -34,7 +35,7 @@ public class Ball {
     public int getSize() {
         return size;
     }
-    public int getMass() {
+    public double getMass() {
         return mass;
     }
     public Vector getSpeed() {

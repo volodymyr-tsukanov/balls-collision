@@ -16,18 +16,18 @@ import javax.swing.Timer;
 
 public class Panel extends JPanel {
     ArrayList<Ball> balls;
-    private Timer timer;
+    private Timer updateTimer;
     private Events events;
 
 
     public Panel() {
         balls = new ArrayList<>();
         events = new Events();
-        timer = new Timer(33, events); //30fps -> 1s/30 = 0.033s
-        
+        updateTimer = new Timer(33, events); //30fps -> 1s/30 = 0.033s
+
         setBackground(Color.BLACK);
         addMouseListener(events);
-        timer.start();
+        updateTimer.start();
     }
 
     
@@ -53,7 +53,7 @@ public class Panel extends JPanel {
 
 
     public class Events implements MouseListener, ActionListener {
-        int collisionCount = 0;
+        int collisionCount = 0, step = 0;
 
 
         @Override
@@ -76,7 +76,11 @@ public class Panel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            simulation();
+            if(step < 2) step++;
+            else{
+                simulation();
+                step = 0;
+            }
             updateObjects();
             repaint();
         }
@@ -111,8 +115,7 @@ public class Panel extends JPanel {
 
         void processCollision(Ball b1, Ball b2){
             Vector b1Speed = b1.getSpeed(), b2Speed = b2.getSpeed();
-            double x, y, collisionAngle = Vector.angleBetween(b1.getSpeed(), Vector.neg(b2.getSpeed()));
-            int b1Mass = b1.getMass(), b2Mass = b2.getMass();
+            double x, y, collisionAngle = Vector.angleBetween(b1Speed, b2Speed), b1Mass = b1.getMass(), b2Mass = b2.getMass();
 
             x = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.cos(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.cos(collisionAngle+Math.PI/2));
             y = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.sin(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.sin(collisionAngle+Math.PI/2));
