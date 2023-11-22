@@ -45,6 +45,9 @@ public class Vector {
     }
 
 
+    public static Vector neg(Vector A){
+        return new Vector(-A.a, -A.b);
+    }
     public static Vector sum(Vector A, Vector B){
         return new Vector(A.a + B.a, A.b + B.b);
     }

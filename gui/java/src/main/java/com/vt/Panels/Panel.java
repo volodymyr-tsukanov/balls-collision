@@ -1,6 +1,7 @@
 package com.vt.Panels;
 
 import com.vt.Objects.Ball;
+import com.vt.Objects.Vector;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -91,14 +92,8 @@ public class Panel extends JPanel {
                     Ball b2 = balls.get(j);
 
                     if (Math.abs(b1.getX() - b2.getX()) < b1.getSize() && Math.abs(b1.getY() - b2.getY()) < b1.getSize()) {
-                        /*b1.setSpeedX(((b1.getMass()-b2.getMass())*b1.getSpeedX()+2*b2.getMass()*b2.getSpeedX()+b1.getMass()*b1.getSpeedX())/(b1.getMass()+b2.getMass()));
-                        b1.setSpeedY(((b1.getMass()-b2.getMass())*b1.getSpeedY()+2*b2.getMass()*b2.getSpeedY()+b1.getMass()*b1.getSpeedY())/(b1.getMass()+b2.getMass()));
-                        b2.setSpeedX(((b2.getMass()-b1.getMass())*b2.getSpeedX()+2*b1.getMass()*b1.getSpeedX()+b2.getMass()*b2.getSpeedX())/(b1.getMass()+b2.getMass()));
-                        b2.setSpeedY(((b2.getMass()-b1.getMass())*b2.getSpeedY()+2*b1.getMass()*b1.getSpeedY()+b2.getMass()*b2.getSpeedY())/(b1.getMass()+b2.getMass()));*/
-                        b1.setSpeedX(-b1.getSpeedX());
-                        b1.setSpeedY(-b1.getSpeedY());
-                        b2.setSpeedX(-b2.getSpeedX());
-                        b2.setSpeedY(-b2.getSpeedY());
+                        processCollision(b1, b2);
+                        processCollision(b2, b1);
 
                         collisionCount++;
                         System.out.println("Collision " + i + ":" + b1 + " -> " + j + ":" + b2);
@@ -106,13 +101,20 @@ public class Panel extends JPanel {
                 }
 
                 // Borders
-                if (b1.getX() <= 0 || b1.getX() >= getWidth()) b1.setSpeedX(-b1.getSpeedX());
-                if (b1.getY() <= 0 || b1.getY() >= getHeight()) b1.setSpeedY(-b1.getSpeedY());
+                if (b1.getX() <= 0 || b1.getX() >= getWidth() || b1.getY() <= 0 || b1.getY() >= getHeight())
+                    b1.setSpeed(Vector.neg(b1.getSpeed()));
 
                 // Kill
                 if (Math.abs(b1.getX()) > 2*getWidth()) balls.remove(i);
                 if (Math.abs(b1.getY()) > 2*getHeight()) balls.remove(i);
             }
+        }
+
+        void processCollision(Ball b1, Ball b2){
+            double x, y;
+            x = ((b1.getSpeed().getMagnitude()*Math.cos(b1.getSpeed().getAngleX()-0)*(b1.getMass()-b2.getMass())+2*b2.getMass()*b2.getSpeed().getMagnitude()*Math.cos(b2.getSpeed().getAngleX()-0))/(b1.getMass() + b2.getMass()))*(Math.cos(0)+b1.getSpeed().getMagnitude()*Math.sin(b1.getSpeed().getAngleX()-0)*Math.cos(0+Math.PI/2));
+            y = ((b1.getSpeed().getMagnitude()*Math.cos(b1.getSpeed().getAngleX()-0)*(b1.getMass()-b2.getMass())+2*b2.getMass()*b2.getSpeed().getMagnitude()*Math.cos(b2.getSpeed().getAngleX()-0))/(b1.getMass() + b2.getMass()))*(Math.sin(0)+b1.getSpeed().getMagnitude()*Math.sin(b1.getSpeed().getAngleX()-0)*Math.sin(0+Math.PI/2));
+            b1.setSpeed(new Vector(x, y));
         }
 
         void updateObjects(){
