@@ -5,7 +5,8 @@ import java.util.Random;
 
 
 public class Ball {
-    int x, y, size, mass, speedX, speedY;
+    int x, y, size, mass;
+    Vector speed;
     Color color;
 
 
@@ -36,30 +37,24 @@ public class Ball {
     public int getMass() {
         return mass;
     }
-    public int getSpeedX() {
-        return speedX;
-    }
-    public int getSpeedY() {
-        return speedY;
+    public Vector getSpeed() {
+        return speed;
     }
     public Color getColor() {
         return color;
     }
 
-    public void setSpeedX(int speedX) {
-        this.speedX = speedX;
-    }
-    public void setSpeedY(int speedY) {
-        this.speedY = speedY;
+    public void setSpeed(Vector speed) {
+        this.speed = speed;
     }
 
 
     public void update() {
-        if(speedX > 5) speedX = 5;
-        if(speedY > 5) speedY = 5;
+        if(speed.getA() > 5) speed.setA(5);
+        if(speed.getB() > 5) speed.setB(5);
 
-        x += speedX;
-        y += speedY;
+        x += speed.getA();
+        y += speed.getB();
     }
 
     @Override
