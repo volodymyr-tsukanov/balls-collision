@@ -20,8 +20,8 @@ public class Ball {
         Random r = new Random();
         size = r.nextInt(10, 51);
         mass = size / 10;
-        speedX = r.nextBoolean() ? r.nextInt(-MAX_SPEED, 0) : r.nextInt(1, MAX_SPEED + 1);
-        speedY = r.nextBoolean() ? r.nextInt(-MAX_SPEED, 0) : r.nextInt(1, MAX_SPEED + 1);
+        double sx = r.nextBoolean() ? r.nextDouble(-MAX_SPEED, 0) : r.nextDouble(1, MAX_SPEED+1), sy = r.nextBoolean() ? r.nextDouble(-MAX_SPEED, 0) : r.nextDouble(1, MAX_SPEED+1);
+        speed = new Vector(sx, sy);
     }
 
 
@@ -50,15 +50,15 @@ public class Ball {
 
 
     public void update() {
-        if(speed.getA() > 5) speed.setA(5);
-        if(speed.getB() > 5) speed.setB(5);
+        if(speed.getX() > 5) speed.setX(5);
+        if(speed.getY() > 5) speed.setY(5);
 
-        x += speed.getA();
-        y += speed.getB();
+        x += speed.getX();
+        y += speed.getY();
     }
 
     @Override
     public String toString(){
-        return "Ball: speed={" + speed.getA() + ";" + speed.getB() + "}";
+        return "Ball: speed={" + speed.getX() + ";" + speed.getY() + "}";
     }
 }

@@ -111,9 +111,13 @@ public class Panel extends JPanel {
         }
 
         void processCollision(Ball b1, Ball b2){
-            double x, y;
-            x = ((b1.getSpeed().getMagnitude()*Math.cos(b1.getSpeed().getAngleX()-0)*(b1.getMass()-b2.getMass())+2*b2.getMass()*b2.getSpeed().getMagnitude()*Math.cos(b2.getSpeed().getAngleX()-0))/(b1.getMass() + b2.getMass()))*(Math.cos(0)+b1.getSpeed().getMagnitude()*Math.sin(b1.getSpeed().getAngleX()-0)*Math.cos(0+Math.PI/2));
-            y = ((b1.getSpeed().getMagnitude()*Math.cos(b1.getSpeed().getAngleX()-0)*(b1.getMass()-b2.getMass())+2*b2.getMass()*b2.getSpeed().getMagnitude()*Math.cos(b2.getSpeed().getAngleX()-0))/(b1.getMass() + b2.getMass()))*(Math.sin(0)+b1.getSpeed().getMagnitude()*Math.sin(b1.getSpeed().getAngleX()-0)*Math.sin(0+Math.PI/2));
+            Vector b1Speed = b1.getSpeed(), b2Speed = b2.getSpeed();
+            double x, y, collisionAngle = Vector.angleBetween(b1.getSpeed(), Vector.neg(b2.getSpeed()));
+            int b1Mass = b1.getMass(), b2Mass = b2.getMass();
+
+            x = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.cos(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.cos(collisionAngle+Math.PI/2));
+            y = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.sin(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.sin(collisionAngle+Math.PI/2));
+
             b1.setSpeed(new Vector(x, y));
         }
 
