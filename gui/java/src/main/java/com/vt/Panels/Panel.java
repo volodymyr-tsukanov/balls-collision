@@ -48,6 +48,7 @@ public class Panel extends JPanel {
                 graphics.drawLine(b.oX, b.oY, (int)(b.oX+b.oldS.getX()), (int)(b.oY+b.oldS.getY()));
                 graphics.setColor(Color.RED);
                 graphics.drawLine(b.oX, b.oY, (int)(b.oX+b.newS.getX()), (int)(b.oY+b.newS.getY()));
+                updateTimer.setDelay(999999);
             }
         }
     }
@@ -70,6 +71,8 @@ public class Panel extends JPanel {
         public void mousePressed(MouseEvent e) {
             balls.add(new Ball(e.getX(), e.getY()));
             repaint();
+
+            updateTimer.restart();
         }
 
         @Override
