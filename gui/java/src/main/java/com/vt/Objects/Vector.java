@@ -62,4 +62,7 @@ public class Vector {
     public static double angleBetween(Vector A, Vector B){
         return Math.acos(((A.x*B.x)/(A.magnitude*B.magnitude)) + ((A.y*B.y)/(A.magnitude*B.magnitude)));
     }
+    public static double scalar(Vector A, Vector B){
+        return A.magnitude * B.magnitude * Math.cos(angleBetween(A, B));
+    }
 }

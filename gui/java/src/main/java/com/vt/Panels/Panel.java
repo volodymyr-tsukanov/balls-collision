@@ -39,9 +39,14 @@ public class Panel extends JPanel {
     }
     
     protected void drawObjects(Graphics graphics){
-        for (Ball k : balls) {
-            graphics.setColor(k.getColor());
-            graphics.drawOval(k.getX(), k.getY(), k.getSize(), k.getSize());
+        for (Ball b : balls) {
+            graphics.setColor(b.getColor());
+            graphics.drawOval(b.getX(), b.getY(), b.getSize(), b.getSize());
+
+            if(b.collV != null){
+                graphics.setColor(Color.RED);
+                graphics.drawLine(b.getX(), b.getY(), (int)(b.getX()+b.collV.getX()), (int)(b.getY()+b.collV.getY()));
+            }
         }
     }
     
@@ -81,6 +86,7 @@ public class Panel extends JPanel {
                 simulation();
                 step = 0;
             }
+
             updateObjects();
             repaint();
         }
