@@ -39,9 +39,9 @@ public class Panel extends JPanel {
     }
     
     protected void drawObjects(Graphics graphics){
-        for (Ball k : balls) {
-            graphics.setColor(k.getColor());
-            graphics.drawOval(k.getX(), k.getY(), k.getSize(), k.getSize());
+        for (Ball b : balls) {
+            graphics.setColor(b.getColor());
+            graphics.drawOval(b.getX(), b.getY(), b.getSize(), b.getSize());
         }
     }
     
@@ -63,6 +63,8 @@ public class Panel extends JPanel {
         public void mousePressed(MouseEvent e) {
             balls.add(new Ball(e.getX(), e.getY()));
             repaint();
+
+            updateTimer.restart();
         }
 
         @Override
