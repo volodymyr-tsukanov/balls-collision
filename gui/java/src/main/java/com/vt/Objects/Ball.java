@@ -9,7 +9,8 @@ public class Ball {
     double mass;
     Vector speed;
     Color color;
-    public Vector collV;
+    public int oX, oY;
+    public Vector oldS, newS;
 
 
     public Ball(int x, int y) {

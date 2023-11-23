@@ -23,7 +23,7 @@ public class Panel extends JPanel {
     public Panel() {
         balls = new ArrayList<>();
         events = new Events();
-        updateTimer = new Timer(33, events); //30fps -> 1s/30 = 0.033s
+        updateTimer = new Timer(666, events); //30fps -> 1s/30 = 0.033s
 
         setBackground(Color.BLACK);
         addMouseListener(events);
@@ -43,9 +43,11 @@ public class Panel extends JPanel {
             graphics.setColor(b.getColor());
             graphics.drawOval(b.getX(), b.getY(), b.getSize(), b.getSize());
 
-            if(b.collV != null){
+            if(b.oldS != null){
+                graphics.setColor(Color.CYAN);
+                graphics.drawLine(b.oX, b.oY, (int)(b.oX+b.oldS.getX()), (int)(b.oY+b.oldS.getY()));
                 graphics.setColor(Color.RED);
-                graphics.drawLine(b.getX(), b.getY(), (int)(b.getX()+b.collV.getX()), (int)(b.getY()+b.collV.getY()));
+                graphics.drawLine(b.oX, b.oY, (int)(b.oX+b.newS.getX()), (int)(b.oY+b.newS.getY()));
             }
         }
     }
@@ -123,11 +125,17 @@ public class Panel extends JPanel {
             Vector b1Speed = b1.getSpeed(), b2Speed = b2.getSpeed();
             double x, y, collisionAngle = Vector.angleBetween(b1Speed, b2Speed), b1Mass = b1.getMass(), b2Mass = b2.getMass();
 
+            b1.oldS = b1Speed;
+
             x = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.cos(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.cos(collisionAngle+Math.PI/2));
             y = ((b1Speed.getMagnitude()*Math.cos(b1Speed.getAngleX()-collisionAngle)*(b1Mass-b2Mass)+2*b2Mass*b2Speed.getMagnitude()*Math.cos(b2Speed.getAngleX()-collisionAngle))/(b1Mass + b2Mass))*(Math.sin(collisionAngle)+b1Speed.getMagnitude()*Math.sin(b1Speed.getAngleX()-collisionAngle)*Math.sin(collisionAngle+Math.PI/2));
 
             if(Double.isNaN(x) || Double.isNaN(y)) b1.destroy();
             else b1.setSpeed(new Vector(x, y));
+
+            b1.newS = b1.getSpeed();
+            b1.oX = b1.getX();
+            b1.oY = b1.getY();
         }
 
         void updateObjects(){
