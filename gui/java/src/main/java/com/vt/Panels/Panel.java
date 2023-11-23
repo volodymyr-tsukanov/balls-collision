@@ -106,7 +106,7 @@ public class Panel extends JPanel {
 
                 // Borders
                 if (b1.getX() <= 0 || b1.getX() >= getWidth() || b1.getY() <= 0 || b1.getY() >= getHeight())
-                    b1.setSpeed(Vector.neg(b1.getSpeed()));
+                    b1.setSpeed(Vector.multiply(Vector.neg(b1.getSpeed()), 0.85));
 
                 // Kill
                 if (Math.abs(b1.getX()) > 2*getWidth() || Math.abs(b1.getY()) > 2*getHeight()) balls.remove(b1);

@@ -19,7 +19,7 @@ public class Ball {
 
         int MAX_SPEED = 5;
         Random r = new Random();
-        size = r.nextInt(20, 71);
+        size = r.nextInt(40, 51);
         mass = size * 10;
         double sx = r.nextBoolean() ? r.nextDouble(-MAX_SPEED, 0) : r.nextDouble(1, MAX_SPEED+1), sy = r.nextBoolean() ? r.nextDouble(-MAX_SPEED, 0) : r.nextDouble(1, MAX_SPEED+1);
         speed = new Vector(sx, sy);
@@ -51,7 +51,8 @@ public class Ball {
 
 
     public void update() {
-        if(speed.getMagnitude() > 50) destroy();
+        if(speed.getMagnitude() > 1000) destroy();
+        else if(speed.getMagnitude() > 50) speed = Vector.multiply(speed, 0.25);
 
         x += speed.getX();
         y += speed.getY();
