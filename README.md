@@ -1,10 +1,13 @@
 # balls-collision
-Java; Windows</br></br>
+**Java** <br><br>
 
 
-Shield: [![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
+![Archived](https://img.shields.io/badge/status-Archived%20%F0%9F%AA%A6-DC143C?style=for-the-badge&logo=github) <br>
 
-[cc-by-nc]: http://creativecommons.org/licenses/by-nc/4.0/
-[cc-by-nc-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+Shields: [![MIT License][mit-shield]][mit]
+
+[mit]: https://opensource.org/licenses/MIT
+[mit-shield]: https://img.shields.io/badge/License-MIT-lightgrey.svg
+
+<a rel="license" href="https://opensource.org/licenses/MIT"><img alt="MIT License" height=47px style="border-width:0" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/7195e121-eded-45cf-9aab-909deebd81b2/d9ur2lg-28410b47-58fd-4a48-9b67-49c0f56c68ce.png/v1/fill/w_1035,h_772,q_70,strp/mit_license_logo_by_excaliburzero_d9ur2lg-pre.jpg" /></a><br>This work is licensed under the <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>.
